@@ -131,3 +131,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Create media directory if it doesn't exist (for development)
+if DEBUG:
+    os.makedirs(MEDIA_ROOT, exist_ok=True)
