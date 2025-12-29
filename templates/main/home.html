@@ -39,33 +39,20 @@
             </p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            <!-- Service 1 -->
+            {% for service in featured_services %}
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl group">
-                <img class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1519824145371-296894a0d72b?q=80&w=1974&auto=format&fit=crop" alt="Massage Relaxant">
+                {% if service.image %}
+                <img class="w-full h-64 object-cover" src="{{ service.image.url }}" alt="{{ service.name }}">
+                {% else %}
+                <img class="w-full h-64 object-cover" src="https://placehold.co/600x400/a2e6b8/333?text=Image+non+disponible" alt="Image non disponible">
+                {% endif %}
                 <div class="p-8">
-                    <h3 class="text-2xl font-bold text-gray-800">Massage Californien</h3>
-                    <p class="mt-4 text-gray-600 h-24">De longs mouvements fluides et enveloppants pour une relaxation physique et psychique.</p>
+                    <h3 class="text-2xl font-bold text-gray-800">{{ service.name }}</h3>
+                    <p class="mt-4 text-gray-600 h-24">{{ service.description|truncatewords:20 }}</p>
                     <a href="{% url 'services' %}" class="mt-6 inline-block text-green-700 font-semibold hover:text-green-800 transition-colors">En savoir plus &rarr;</a>
                 </div>
             </div>
-            <!-- Service 2 -->
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl group">
-                <img class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1600334089648-b0d9d3028269?q=80&w=1974&auto=format&fit=crop" alt="Massage Tissus Profonds">
-                <div class="p-8">
-                    <h3 class="text-2xl font-bold text-gray-800">Massage Tissus Profonds</h3>
-                    <p class="mt-4 text-gray-600 h-24">Cible les couches profondes des muscles pour soulager les tensions chroniques.</p>
-                    <a href="{% url 'services' %}" class="mt-6 inline-block text-green-700 font-semibold hover:text-green-800 transition-colors">En savoir plus &rarr;</a>
-                </div>
-            </div>
-            <!-- Service 3 -->
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl group">
-                <img class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1992&auto=format&fit=crop" alt="Réflexologie Plantaire">
-                <div class="p-8">
-                    <h3 class="text-2xl font-bold text-gray-800">Réflexologie Plantaire</h3>
-                    <p class="mt-4 text-gray-600 h-24">Stimulation des points réflexes des pieds pour rééquilibrer les énergies du corps.</p>
-                    <a href="{% url 'services' %}" class="mt-6 inline-block text-green-700 font-semibold hover:text-green-800 transition-colors">En savoir plus &rarr;</a>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>

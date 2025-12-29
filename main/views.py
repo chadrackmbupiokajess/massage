@@ -3,7 +3,8 @@ from .models import Service, ContactMessage
 from .forms import ContactForm
 
 def home(request):
-    return render(request, 'main/home.html')
+    featured_services = Service.objects.all()[:3]  # Récupère les 3 premiers services
+    return render(request, 'main/home.html', {'featured_services': featured_services})
 
 def about(request):
     return render(request, 'main/about.html')
