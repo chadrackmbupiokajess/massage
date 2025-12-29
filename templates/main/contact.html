@@ -24,24 +24,14 @@
                 {% endif %}
                 <form method="post" class="space-y-6">
                     {% csrf_token %}
-                    <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700">Nom complet</label>
-                        <div class="mt-1">
-                            <input type="text" name="name" id="name" autocomplete="name" required class="py-3 px-4 block w-full shadow-sm focus:ring-green-500 focus:border-green-500 border-gray-300 rounded-md transition-shadow duration-300">
+                    {% for field in form %}
+                        <div>
+                            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
+                            <div class="mt-1">
+                                {{ field }}
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700">Adresse e-mail</label>
-                        <div class="mt-1">
-                            <input id="email" name="email" type="email" autocomplete="email" required class="py-3 px-4 block w-full shadow-sm focus:ring-green-500 focus:border-green-500 border-gray-300 rounded-md transition-shadow duration-300">
-                        </div>
-                    </div>
-                    <div>
-                        <label for="message" class="block text-sm font-medium text-gray-700">Votre message</label>
-                        <div class="mt-1">
-                            <textarea id="message" name="message" rows="4" required class="py-3 px-4 block w-full shadow-sm focus:ring-green-500 focus:border-green-500 border border-gray-300 rounded-md transition-shadow duration-300"></textarea>
-                        </div>
-                    </div>
+                    {% endfor %}
                     <div>
                         <button type="submit" class="w-full inline-flex items-center justify-center px-6 py-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-300 transform hover:scale-105">
                             Envoyer le message
