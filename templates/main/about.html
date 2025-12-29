@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}À Propos - Institut de Bien-être{% endblock %}
+
+{% block content %}
+<div class="bg-white py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-24 lg:items-center">
+            <div class="relative h-[500px] rounded-xl overflow-hidden shadow-lg">
+                <img class="absolute inset-0 w-full h-full object-cover" src="https://placehold.co/600x800/a2e6b8/333?text=La+Praticienne" alt="La praticienne">
+            </div>
+            <div class="mt-12 lg:mt-0">
+                <h1 class="text-4xl lg:text-5xl font-bold text-gray-800">Mon approche du bien-être</h1>
+                <p class="mt-8 text-gray-600 text-lg">
+                    Passionnée par les thérapies manuelles et la relaxation, j'ai à cœur de vous offrir un moment de détente profonde. Mon parcours m'a permis d'acquérir une expertise dans différentes techniques de massage, que j'adapte à vos besoins pour un soin véritablement sur-mesure.
+                </p>
+                <p class="mt-6 text-gray-600 text-lg">
+                    Ma philosophie repose sur une écoute attentive et une approche holistique, considérant chaque personne dans sa globalité.
+                </p>
+            </div>
+        </div>
+
+        <div class="mt-28">
+            <h2 class="text-3xl lg:text-4xl font-bold text-center text-gray-800">Mes engagements pour votre sérénité</h2>
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 text-center">
+                <div class="p-8 bg-gray-50 rounded-xl shadow-md transform hover:-translate-y-2 transition-all duration-300 hover:shadow-xl">
+                    <h3 class="text-2xl font-semibold text-green-800">Bien-être</h3>
+                    <p class="mt-3 text-gray-600">Votre confort et votre détente sont ma priorité absolue.</p>
+                </div>
+                <div class="p-8 bg-gray-50 rounded-xl shadow-md transform hover:-translate-y-2 transition-all duration-300 hover:shadow-xl">
+                    <h3 class="text-2xl font-semibold text-green-800">Hygiène</h3>
+                    <p class="mt-3 text-gray-600">Un environnement impeccable pour une expérience saine et sécurisante.</p>
+                </div>
+                <div class="p-8 bg-gray-50 rounded-xl shadow-md transform hover:-translate-y-2 transition-all duration-300 hover:shadow-xl">
+                    <h3 class="text-2xl font-semibold text-green-800">Respect</h3>
+                    <p class="mt-3 text-gray-600">Une écoute bienveillante et une confidentialité totale.</p>
+                </div>
+                <div class="p-8 bg-gray-50 rounded-xl shadow-md transform hover:-translate-y-2 transition-all duration-300 hover:shadow-xl">
+                    <h3 class="text-2xl font-semibold text-green-800">Professionnalisme</h3>
+                    <p class="mt-3 text-gray-600">Des techniques maîtrisées pour un service de haute qualité.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
