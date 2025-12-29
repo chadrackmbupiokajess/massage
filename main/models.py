@@ -18,3 +18,15 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f"Message from {self.name}"
+
+class CarouselSlide(models.Model):
+    title = models.CharField(max_length=200)
+    subtitle = models.CharField(max_length=300)
+    image = models.ImageField(upload_to='carousel/')
+    order = models.PositiveIntegerField(default=0, help_text="Ordre d'affichage de la diapositive")
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title
