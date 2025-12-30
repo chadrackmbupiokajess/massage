@@ -19,10 +19,17 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# --- Admin Site Titles ---
+admin.site.site_header = "Administration de Relax & Restore Massage"
+admin.site.site_title = "Portail d'administration"
+admin.site.index_title = "Bienvenue sur le portail d'administration"
+# -------------------------
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
 ]
 
 # Force serving media files in development
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
