@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Service, ContactMessage, CarouselSlide, HomePageContent, Testimonial
+from .models import Service, ContactMessage, CarouselSlide, HomePageContent, Testimonial, AboutPageContent, Commitment
 from .forms import ContactForm
 
 def home(request):
@@ -16,7 +16,12 @@ def home(request):
     })
 
 def about(request):
-    return render(request, 'main/about.html')
+    about_content = AboutPageContent.load()
+    commitments = Commitment.objects.all()
+    return render(request, 'main/about.html', {
+        'content': about_content,
+        'commitments': commitments
+    })
 
 def services(request):
     services_list = Service.objects.all()

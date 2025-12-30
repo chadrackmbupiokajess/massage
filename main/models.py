@@ -61,3 +61,34 @@ class Testimonial(models.Model):
 
     def __str__(self):
         return f'"{self.quote[:30]}..." - {self.author}'
+
+class AboutPageContent(models.Model):
+    title = models.CharField(max_length=200, default="Mon approche du bien-être")
+    main_text = models.TextField(default="Passionnée par les thérapies manuelles...")
+    philosophy_text = models.TextField(default="Ma philosophie repose sur une écoute attentive...")
+    commitments_title = models.CharField(max_length=200, default="Mes engagements pour votre sérénité")
+    image = models.ImageField(upload_to='about/', blank=True, null=True, help_text="Image pour la page À Propos")
+
+    def __str__(self):
+        return "Contenu de la page À Propos"
+
+    # Singleton pattern
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super(AboutPageContent, self).save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj
+
+class Commitment(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title
