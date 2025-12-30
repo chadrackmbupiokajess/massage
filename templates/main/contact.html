@@ -7,16 +7,16 @@
 <div class="bg-gray-50 py-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
-            <h1 class="text-4xl lg:text-5xl font-bold text-gray-800">Prenons contact</h1>
+            <h1 class="text-4xl lg:text-5xl font-bold text-gray-800">{{ content.title }}</h1>
             <p class="mt-6 max-w-3xl mx-auto text-lg text-gray-600">
-                Pour toute question ou pour prendre rendez-vous, n'hésitez pas à me laisser un message. Je vous répondrai dans les plus brefs délais.
+                {{ content.subtitle|linebreaksbr }}
             </p>
         </div>
 
         <div class="mt-16 lg:grid lg:grid-cols-2 lg:gap-24">
             <!-- Contact Form -->
             <div class="bg-white p-8 rounded-xl shadow-lg">
-                {% if 'submitted' in request.GET %}
+                {% if submitted %}
                     <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md mb-8" role="alert">
                         <p class="font-bold">Message envoyé !</p>
                         <p>Merci de m'avoir contacté. Je reviens vers vous très prochainement.</p>
@@ -51,8 +51,8 @@
                             </div>
                         </div>
                         <div class="ml-4">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900">Email</h3>
-                            <p class="mt-2 text-base text-gray-600">contact@bienetre.com</p>
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">{{ content.email_title }}</h3>
+                            <p class="mt-2 text-base text-gray-600">{{ content.email }}</p>
                         </div>
                     </div>
                     <div class="flex items-start">
@@ -62,8 +62,8 @@
                             </div>
                         </div>
                         <div class="ml-4">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900">Téléphone</h3>
-                            <p class="mt-2 text-base text-gray-600">06 12 34 56 78</p>
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">{{ content.phone_title }}</h3>
+                            <p class="mt-2 text-base text-gray-600">{{ content.phone }}</p>
                         </div>
                     </div>
                     <div class="flex items-start">
@@ -73,8 +73,8 @@
                             </div>
                         </div>
                         <div class="ml-4">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900">Adresse</h3>
-                            <p class="mt-2 text-base text-gray-600">Paris, France</p>
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">{{ content.address_title }}</h3>
+                            <p class="mt-2 text-base text-gray-600">{{ content.address }}</p>
                         </div>
                     </div>
                 </div>

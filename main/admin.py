@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Service, ContactMessage, CarouselSlide, HomePageContent, Testimonial, AboutPageContent, Commitment
+from .models import Service, ContactMessage, CarouselSlide, HomePageContent, Testimonial, AboutPageContent, Commitment, ContactPageContent
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
@@ -41,3 +41,8 @@ class CommitmentAdmin(admin.ModelAdmin):
     list_display = ('title', 'order')
     list_editable = ('order',)
     search_fields = ('title', 'description')
+
+@admin.register(ContactPageContent)
+class ContactPageContentAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request):
+        return self.model.objects.count() == 0

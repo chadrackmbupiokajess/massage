@@ -93,3 +93,26 @@ class Commitment(models.Model):
 
     def __str__(self):
         return self.title
+
+class ContactPageContent(models.Model):
+    title = models.CharField(max_length=200, default="Prenons contact")
+    subtitle = models.TextField(default="Pour toute question ou pour prendre rendez-vous...")
+    email_title = models.CharField(max_length=100, default="Email")
+    email = models.EmailField(default="contact@bienetre.com")
+    phone_title = models.CharField(max_length=100, default="Téléphone")
+    phone = models.CharField(max_length=50, default="06 12 34 56 78")
+    address_title = models.CharField(max_length=100, default="Adresse")
+    address = models.CharField(max_length=200, default="Paris, France")
+
+    def __str__(self):
+        return "Contenu de la page de Contact"
+
+    # Singleton pattern
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super(ContactPageContent, self).save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj

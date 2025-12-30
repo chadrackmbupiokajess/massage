@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Service, ContactMessage, CarouselSlide, HomePageContent, Testimonial, AboutPageContent, Commitment
+from .models import Service, ContactMessage, CarouselSlide, HomePageContent, Testimonial, AboutPageContent, Commitment, ContactPageContent
 from .forms import ContactForm
 
 def home(request):
@@ -28,6 +28,7 @@ def services(request):
     return render(request, 'main/services.html', {'services': services_list})
 
 def contact(request):
+    contact_content = ContactPageContent.load()
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -35,4 +36,9 @@ def contact(request):
             return redirect('/contact?submitted=true')
     else:
         form = ContactForm()
-    return render(request, 'main/contact.html', {'form': form})
+    
+    return render(request, 'main/contact.html', {
+        'form': form,
+        'content': contact_content,
+        'submitted': request.GET.get('submitted', False)
+    })
