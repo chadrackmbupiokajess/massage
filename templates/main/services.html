@@ -15,13 +15,16 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {% for service in services %}
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl group">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl group flex flex-col">
                 <div class="overflow-hidden">
                     <img class="w-full h-60 object-cover group-hover:scale-105 transition-transform duration-500" src="{{ service.image.url }}" alt="{{ service.name }}">
                 </div>
-                <div class="p-8">
+                <div class="p-8 flex flex-col flex-grow">
                     <h2 class="text-2xl font-bold text-gray-800">{{ service.name }}</h2>
-                    <p class="mt-4 text-gray-600 h-24">{{ service.description }}</p>
+                    
+                    <!-- La classe `flex-grow` ici va pousser le contenu suivant vers le bas -->
+                    <p class="mt-4 text-gray-600 flex-grow">{{ service.description|linebreaksbr }}</p>
+                    
                     <div class="mt-6 flex justify-between items-center">
                         <span class="text-2xl font-bold text-green-700">{{ service.price }}</span>
                         <span class="text-gray-500 font-medium">{{ service.duration }}</span>
