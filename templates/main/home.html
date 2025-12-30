@@ -52,20 +52,23 @@
     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-black/20"></div>
 
     <!-- Text and CTA -->
-    <div class="relative z-10 flex flex-col justify-center items-center h-full text-white text-center px-4">
-        <div class="relative w-full max-w-4xl flex items-center justify-center" style="min-height: 150px;">
-            <template x-for="(slide, index) in slides" :key="index">
-                <div x-show="activeSlide === index" 
-                     x-transition:enter="transition ease-out duration-1000 delay-300"
-                     x-transition:enter-start="opacity-0 transform translate-y-5"
-                     x-transition:enter-end="opacity-100 transform translate-y-0"
-                     class="text-center absolute">
-                    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight" x-text="slide.title"></h1>
-                    <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto" x-text="slide.subtitle"></p>
-                </div>
-            </template>
+    <div class="relative z-10 flex flex-col justify-center items-center h-full text-white text-center px-4 py-8">
+        <!-- This div will now grow and push the button down -->
+        <div class="flex-grow flex items-center justify-center w-full max-w-4xl">
+            <div class="relative w-full" style="min-height: 150px;">
+                <template x-for="(slide, index) in slides" :key="index">
+                    <div x-show="activeSlide === index" 
+                         x-transition:enter="transition ease-out duration-1000 delay-300"
+                         x-transition:enter-start="opacity-0 transform translate-y-5"
+                         x-transition:enter-end="opacity-100 transform translate-y-0"
+                         class="text-center absolute inset-0 flex flex-col justify-center items-center">
+                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight" x-text="slide.title"></h1>
+                        <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto" x-text="slide.subtitle"></p>
+                    </div>
+                </template>
+            </div>
         </div>
-        <a href="{% url 'services' %}" class="mt-8 bg-green-700 text-white font-bold py-4 px-10 rounded-full hover:bg-green-800 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-green-900/50">
+        <a href="{% url 'services' %}" class="bg-green-700 text-white font-bold py-4 px-10 rounded-full hover:bg-green-800 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-green-900/50">
             Découvrir nos soins
         </a>
     </div>
