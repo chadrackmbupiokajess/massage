@@ -34,6 +34,7 @@ class CarouselSlide(models.Model):
 class HomePageContent(models.Model):
     intro_title = models.CharField(max_length=200, default="Une approche dédiée à votre bien-être")
     intro_text = models.TextField(default="Chaque séance est une invitation au lâcher-prise...")
+    testimonials_title = models.CharField(max_length=200, default="Ce que mes client(e)s en disent")
     cta_title = models.CharField(max_length=200, default="Prêt(e) à vous accorder une pause ?")
     cta_text = models.TextField(default="N'attendez plus pour prendre soin de vous...")
 
