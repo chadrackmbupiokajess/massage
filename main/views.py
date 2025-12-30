@@ -1,13 +1,18 @@
 from django.shortcuts import render, redirect
-from .models import Service, ContactMessage, CarouselSlide
+from .models import Service, ContactMessage, CarouselSlide, HomePageContent, Testimonial
 from .forms import ContactForm
 
 def home(request):
     featured_services = Service.objects.all()[:3]
     slides = CarouselSlide.objects.all()
+    home_content = HomePageContent.load()
+    testimonials = Testimonial.objects.filter(is_visible=True)
+
     return render(request, 'main/home.html', {
         'featured_services': featured_services,
-        'slides': slides
+        'slides': slides,
+        'home_content': home_content,
+        'testimonials': testimonials,
     })
 
 def about(request):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Service, ContactMessage, CarouselSlide
+from .models import Service, ContactMessage, CarouselSlide, HomePageContent, Testimonial
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
@@ -17,3 +17,16 @@ class CarouselSlideAdmin(admin.ModelAdmin):
     list_display = ('title', 'order')
     list_editable = ('order',)
     search_fields = ('title', 'subtitle')
+
+@admin.register(HomePageContent)
+class HomePageContentAdmin(admin.ModelAdmin):
+    # To make sure only one object can be created
+    def has_add_permission(self, request):
+        return self.model.objects.count() == 0
+
+@admin.register(Testimonial)
+class TestimonialAdmin(admin.ModelAdmin):
+    list_display = ('author', 'is_visible', 'order')
+    list_editable = ('is_visible', 'order')
+    search_fields = ('author', 'quote')
+    list_filter = ('is_visible',)
