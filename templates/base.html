@@ -16,6 +16,25 @@
         .transition-transform {
             transition: transform 0.3s ease-in-out;
         }
+        /* Hide the default Google Translate widget and the top banner */
+        #google_translate_element, .skiptranslate {
+            display: none !important;
+        }
+        body {
+            top: 0 !important;
+        }
+        iframe.goog-te-banner-frame {
+            display: none !important;
+        }
+        /* Style for our custom combobox */
+        #language-switcher {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+        }
     </style>
     {% block head_extra %}{% endblock %}
 </head>
@@ -33,6 +52,15 @@
                         <a href="{% url 'services' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-green-700 hover:bg-green-50 transition-all duration-300">Services</a>
                         <a href="{% url 'contact' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-green-700 hover:bg-green-50 transition-all duration-300">Contact</a>
                     </div>
+                </div>
+                <div class="hidden md:flex items-center">
+                    <!-- Our custom combobox -->
+                    <select id="language-switcher" class="ml-4 block w-full pl-3 pr-10 py-2 text-sm font-medium text-gray-700 border-gray-300 rounded-md hover:bg-green-50 focus:outline-none focus:ring-green-500 focus:border-green-500 transition-all duration-300">
+                        <option value="fr">Français</option>
+                        <option value="en">English</option>
+                    </select>
+                    <!-- The hidden Google Translate widget -->
+                    <div id="google_translate_element"></div>
                 </div>
                 <div class="-mr-2 flex md:hidden">
                     <button @click="open = !open" type="button" class="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-green-700 hover:bg-green-100 focus:outline-none">
@@ -117,6 +145,64 @@
             </div>
         </div>
     </footer>
+
+    <script type="text/javascript">
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                let date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60*1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            let cookieArr = document.cookie.split(";");
+            for(let i = 0; i < cookieArr.length; i++) {
+                let cookiePair = cookieArr[i].split("=");
+                if(name == cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            return null;
+        }
+
+        function setupSwitcher() {
+            const switcher = document.getElementById('language-switcher');
+            if (!switcher) return;
+
+            // Set initial value of our switcher based on the Google Translate cookie
+            const googleCookie = getCookie('googtrans');
+            if (googleCookie) {
+                const lang = googleCookie.split('/')[2];
+                if (lang && switcher.querySelector(`option[value="${lang}"]`)) {
+                    switcher.value = lang;
+                }
+            }
+
+            switcher.addEventListener('change', function() {
+                const lang = this.value;
+                // The cookie value tells Google's script what to do on the next page load.
+                setCookie('googtrans', '/fr/' + lang, 1);
+                window.location.reload();
+            });
+        }
+
+        // This function is called by Google's script when it's ready.
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({
+              pageLanguage: 'fr', 
+              includedLanguages: 'en,fr', 
+              autoDisplay: false
+            }, 'google_translate_element');
+            
+            // Now that Google's script is running, we can safely set up our custom logic.
+            setupSwitcher();
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script>
         tailwind.config = {
           theme: {

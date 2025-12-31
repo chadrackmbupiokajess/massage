@@ -1,0 +1,144 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-31 01:00+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\massage_site\settings.py:113
+msgid "French"
+msgstr "French"
+
+#: .\massage_site\settings.py:114
+msgid "English"
+msgstr "English"
+
+#: .\templates\base.html:32 .\templates\base.html:77 .\templates\base.html:105
+#: .\templates\main\home.html:5
+msgid "Accueil"
+msgstr "Home"
+
+#: .\templates\base.html:33 .\templates\base.html:78 .\templates\base.html:106
+#: .\templates\main\about.html:5
+msgid "À Propos"
+msgstr "About"
+
+#: .\templates\base.html:34 .\templates\base.html:79
+msgid "Services"
+msgstr "Services"
+
+#: .\templates\base.html:35 .\templates\base.html:80 .\templates\base.html:108
+#: .\templates\main\contact.html:5
+msgid "Contact"
+msgstr "Contact"
+
+#: .\templates\base.html:56
+msgid "Open main menu"
+msgstr "Open main menu"
+
+#: .\templates\base.html:97
+msgid ""
+"Votre sanctuaire personnel pour la relaxation et la revitalisation. Nous "
+"offrons des soins de massage professionnels pour harmoniser le corps et "
+"l'esprit."
+msgstr "Your personal sanctuary for relaxation and revitalization. We offer professional massage treatments to harmonize body and mind."
+
+#: .\templates\base.html:103
+msgid "Navigation"
+msgstr "Navigation"
+
+#: .\templates\base.html:107 .\templates\main\services.html:5
+msgid "Nos Soins"
+msgstr "Our Treatments"
+
+#: .\templates\base.html:114
+msgid "Suivez-nous"
+msgstr "Follow us"
+
+#: .\templates\base.html:132
+msgid "Tous droits réservés."
+msgstr "All rights reserved."
+
+#: .\templates\base.html:133
+msgid "Conçu avec passion pour votre relaxation."
+msgstr "Designed with passion for your relaxation."
+
+#: .\templates\main\about.html:13 .\templates\main\about.html:15
+msgid "La praticienne"
+msgstr "The practitioner"
+
+#: .\templates\main\about.html:15
+msgid "La Praticienne"
+msgstr "The Practitioner"
+
+#: .\templates\main\contact.html:22
+msgid "Message envoyé !"
+msgstr "Message sent!"
+
+#: .\templates\main\contact.html:23
+msgid "Merci de m'avoir contacté. Je reviens vers vous très prochainement."
+msgstr "Thank you for contacting me. I will get back to you very soon."
+
+#: .\templates\main\contact.html:38
+msgid "Envoyer le message"
+msgstr "Send message"
+
+#: .\templates\main\contact.html:46
+msgid "Autres moyens de contact"
+msgstr "Other ways to contact"
+
+#: .\templates\main\home.html:73
+msgid "Découvrir nos soins"
+msgstr "Discover our treatments"
+
+#: .\templates\main\home.html:99
+msgid "Bienvenue"
+msgstr "Welcome"
+
+#: .\templates\main\home.html:112
+msgid "Nos soins les plus appréciés"
+msgstr "Our most popular treatments"
+
+#: .\templates\main\home.html:114
+msgid ""
+"Découvrez une sélection de nos massages les plus populaires, conçus pour une "
+"relaxation profonde."
+msgstr "Discover a selection of our most popular massages, designed for deep relaxation."
+
+#: .\templates\main\home.html:123
+msgid "Image non disponible"
+msgstr "Image not available"
+
+#: .\templates\main\home.html:128
+msgid "En savoir plus"
+msgstr "Learn more"
+
+#: .\templates\main\home.html:161
+msgid "Nous Contacter"
+msgstr "Contact Us"
+
+#: .\templates\main\services.html:11
+msgid "Découvrez nos soins"
+msgstr "Discover our treatments"
+
+#: .\templates\main\services.html:13
+msgid ""
+"Une gamme de massages conçus pour répondre à vos attentes et vous procurer "
+"une détente optimale."
+msgstr "A range of massages designed to meet your expectations and provide you with optimal relaxation."
+
+#: .\templates\main\services.html:35
+msgid "Réserver ce soin"
+msgstr "Book this treatment"
