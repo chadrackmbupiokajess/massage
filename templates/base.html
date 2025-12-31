@@ -26,15 +26,6 @@
         iframe.goog-te-banner-frame {
             display: none !important;
         }
-        /* Style for our custom combobox */
-        #language-switcher {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 0.5rem center;
-            background-repeat: no-repeat;
-            background-size: 1.5em 1.5em;
-            padding-right: 2.5rem;
-        }
     </style>
     {% block head_extra %}{% endblock %}
 </head>
@@ -53,26 +44,35 @@
                         <a href="{% url 'contact' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-green-700 hover:bg-green-50 transition-all duration-300">Contact</a>
                     </div>
                 </div>
-                <div class="hidden md:flex items-center">
-                    <!-- Our custom combobox -->
-                    <select id="language-switcher" class="ml-4 block w-full pl-3 pr-10 py-2 text-sm font-medium text-gray-700 border-gray-300 rounded-md hover:bg-green-50 focus:outline-none focus:ring-green-500 focus:border-green-500 transition-all duration-300">
-                        <option value="fr">Français</option>
-                        <option value="en">English</option>
-                    </select>
-                    <!-- The hidden Google Translate widget -->
-                    <div id="google_translate_element"></div>
+                
+                <!-- Right-side items for both desktop and mobile -->
+                <div class="flex items-center">
+                    <!-- Desktop Language Button -->
+                    <a href="#" class="language-toggle hidden md:block ml-4 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-green-700 hover:bg-green-50 transition-all duration-300 border border-gray-300">
+                        ...
+                    </a>
+
+                    <!-- Mobile Buttons -->
+                    <div class="flex items-center md:hidden">
+                        <!-- Mobile Language Button -->
+                        <a href="#" class="language-toggle mr-2 px-3 py-1.5 rounded-md text-sm font-medium text-gray-700 hover:text-green-700 hover:bg-green-50 transition-all duration-300 border border-gray-300">
+                            ...
+                        </a>
+                        <!-- Mobile Menu (Hamburger) Button -->
+                        <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-green-700 hover:bg-green-100 focus:outline-none">
+                            <span class="sr-only">Open main menu</span>
+                            <svg :class="{'hidden': open, 'block': !open }" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                            <svg :class="{'block': open, 'hidden': !open }" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                <div class="-mr-2 flex md:hidden">
-                    <button @click="open = !open" type="button" class="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-green-700 hover:bg-green-100 focus:outline-none">
-                        <span class="sr-only">Open main menu</span>
-                        <svg :class="{'hidden': open, 'block': !open }" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <svg :class="{'block': open, 'hidden': !open }" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
+                
+                <!-- The hidden Google Translate widget -->
+                <div id="google_translate_element"></div>
             </div>
         </div>
 
@@ -154,7 +154,7 @@
                 date.setTime(date.getTime() + (days*24*60*60*1000));
                 expires = "; expires=" + date.toUTCString();
             }
-            document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+            document.cookie = name + "=" + (value || "")  + expires + "; path=/; SameSite=Lax";
         }
 
         function getCookie(name) {
@@ -168,24 +168,32 @@
             return null;
         }
 
-        function setupSwitcher() {
-            const switcher = document.getElementById('language-switcher');
-            if (!switcher) return;
+        function setupLanguageToggle() {
+            const toggleButtons = document.querySelectorAll('.language-toggle');
+            if (toggleButtons.length === 0) return;
 
-            // Set initial value of our switcher based on the Google Translate cookie
+            // Determine current language from the cookie
             const googleCookie = getCookie('googtrans');
-            if (googleCookie) {
-                const lang = googleCookie.split('/')[2];
-                if (lang && switcher.querySelector(`option[value="${lang}"]`)) {
-                    switcher.value = lang;
-                }
-            }
+            const currentLang = (googleCookie && googleCookie.includes('/en')) ? 'en' : 'fr';
 
-            switcher.addEventListener('change', function() {
-                const lang = this.value;
-                // The cookie value tells Google's script what to do on the next page load.
-                setCookie('googtrans', '/fr/' + lang, 1);
-                window.location.reload();
+            // Set the button's text to show the *other* language
+            const buttonText = (currentLang === 'en') ? 'FR' : 'EN';
+            toggleButtons.forEach(button => button.textContent = buttonText);
+            
+            // Add click listener to the buttons
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent the link from navigating
+
+                    // Determine the language to switch to
+                    const targetLang = (currentLang === 'en') ? 'fr' : 'en';
+
+                    // Set the Google Translate cookie to the target language
+                    setCookie('googtrans', '/fr/' + targetLang, 1);
+                    
+                    // Reload the page to apply the new language
+                    window.location.reload();
+                });
             });
         }
 
@@ -197,8 +205,8 @@
               autoDisplay: false
             }, 'google_translate_element');
             
-            // Now that Google's script is running, we can safely set up our custom logic.
-            setupSwitcher();
+            // Now that Google's script is running, we can safely set up our custom button.
+            setupLanguageToggle();
         }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
