@@ -1,4 +1,5 @@
 from django.db import models
+from django_countries.fields import CountryField
 
 class Service(models.Model):
     name = models.CharField(max_length=100)
@@ -23,7 +24,7 @@ class Reservation(models.Model):
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
     email = models.EmailField()
-    country = models.CharField(max_length=100)
+    country = CountryField(blank_label='(sélectionnez un pays)')
     city = models.CharField(max_length=100)
     address = models.TextField()
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')

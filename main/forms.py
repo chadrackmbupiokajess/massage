@@ -1,5 +1,6 @@
 from django import forms
 from .models import Reservation, ContactMessage
+from django_countries.widgets import CountrySelectWidget
 
 class ContactForm(forms.ModelForm):
     class Meta:
@@ -30,10 +31,10 @@ class ReservationForm(forms.ModelForm):
         widgets = {
             'date': DateInput(),
             'time': TimeInput(),
+            'country': CountrySelectWidget(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'}),
             'name': forms.TextInput(attrs={'placeholder': 'Votre nom complet', 'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'}),
             'phone': forms.TextInput(attrs={'placeholder': 'Votre numéro de téléphone', 'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'}),
             'email': forms.EmailInput(attrs={'placeholder': 'Votre adresse email', 'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'}),
-            'country': forms.TextInput(attrs={'placeholder': 'Pays', 'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'}),
             'city': forms.TextInput(attrs={'placeholder': 'Ville', 'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'}),
             'address': forms.Textarea(attrs={'placeholder': 'Votre adresse complète', 'rows': 3, 'class': 'w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500'}),
             'service': forms.HiddenInput(), # Le service sera pré-rempli et caché
