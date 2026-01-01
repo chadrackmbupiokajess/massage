@@ -115,16 +115,18 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {% for service in featured_services %}
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl group">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl group flex flex-col">
                 {% if service.image %}
                 <img class="w-full h-64 object-cover" src="{{ service.image.url }}" alt="{{ service.name }}">
                 {% else %}
                 <img class="w-full h-64 object-cover" src="https://placehold.co/600x400/a2e6b8/333?text=Image+non+disponible" alt="Image non disponible">
                 {% endif %}
-                <div class="p-8">
+                <div class="p-8 flex flex-col flex-grow">
                     <h3 class="text-2xl font-bold text-gray-800">{{ service.name }}</h3>
-                    <p class="mt-4 text-gray-600 h-24">{{ service.description|truncatewords:20 }}</p>
-                    <a href="{% url 'services' %}" class="mt-6 inline-block text-green-700 font-semibold hover:text-green-800 transition-colors">En savoir plus &rarr;</a>
+                    <p class="mt-4 text-gray-600 flex-grow">{{ service.description|truncatewords:20 }}</p>
+                    <div class="mt-6">
+                        <a href="{% url 'services' %}" class="inline-block text-green-700 font-semibold hover:text-green-800 transition-colors">En savoir plus &rarr;</a>
+                    </div>
                 </div>
             </div>
             {% endfor %}
