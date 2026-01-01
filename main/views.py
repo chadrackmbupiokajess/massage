@@ -1,6 +1,9 @@
-from django.shortcuts import render, redirect
-from .models import Service, ContactMessage, CarouselSlide, HomePageContent, Testimonial, AboutPageContent, Commitment, ContactPageContent
-from .forms import ContactForm
+from django.shortcuts import render, redirect, get_object_or_404
+from django.core.mail import send_mail
+from django.conf import settings
+from django.template.loader import render_to_string
+from .models import Service, Reservation, ContactMessage, CarouselSlide, HomePageContent, Testimonial, AboutPageContent, Commitment, ContactPageContent
+from .forms import ContactForm, ReservationForm
 
 def home(request):
     featured_services = Service.objects.all()[:3]
@@ -42,3 +45,34 @@ def contact(request):
         'content': contact_content,
         'submitted': request.GET.get('submitted', False)
     })
+
+def reservation_view(request, service_id):
+    service = get_object_or_404(Service, pk=service_id)
+    
+    if request.method == 'POST':
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save()
+            
+            # Send confirmation email to the client
+            client_subject = f"Confirmation de votre réservation pour {reservation.service.name}"
+            client_message = render_to_string('emails/client_confirmation.txt', {'reservation': reservation})
+            send_mail(client_subject, client_message, settings.DEFAULT_FROM_EMAIL, [reservation.email])
+
+            # Send notification email to the admin
+            admin_subject = f"Nouvelle réservation de {reservation.name} pour {reservation.service.name}"
+            admin_message = render_to_string('emails/admin_notification.txt', {'reservation': reservation})
+            send_mail(admin_subject, admin_message, settings.DEFAULT_FROM_EMAIL, [settings.ADMIN_EMAIL]) # Assurez-vous que ADMIN_EMAIL est défini dans vos settings
+
+            return redirect('reservation_confirmation', reservation_id=reservation.id)
+    else:
+        form = ReservationForm(initial={'service': service})
+
+    return render(request, 'main/reservation_form.html', {
+        'form': form,
+        'service': service
+    })
+
+def reservation_confirmation_view(request, reservation_id):
+    reservation = get_object_or_404(Reservation, pk=reservation_id)
+    return render(request, 'main/reservation_confirmation.html', {'reservation': reservation})

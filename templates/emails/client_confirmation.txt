@@ -1,0 +1,16 @@
+Bonjour {{ reservation.name }},
+
+Merci pour votre réservation !
+
+Votre demande de rendez-vous pour le soin "{{ reservation.service.name }}" a bien été enregistrée.
+
+Voici le récapitulatif :
+- Soin : {{ reservation.service.name }}
+- Date : {{ reservation.date|date:"l d F Y" }}
+- Heure : {{ reservation.time|time:"H:i" }}
+- Prix : {{ reservation.service.price }}
+
+Nous vous contacterons prochainement pour confirmer définitivement votre rendez-vous.
+
+Cordialement,
+L'équipe de Relax & Restore Massage

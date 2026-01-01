@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Réservation pour {{ service.name }}{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl lg:text-5xl font-bold text-gray-800">Réserver votre soin</h1>
+            <p class="mt-4 text-lg text-gray-600">Vous êtes sur le point de réserver le soin suivant :</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden lg:grid lg:grid-cols-2 lg:gap-4">
+            <!-- Service Details -->
+            <div class="p-8 border-b lg:border-b-0 lg:border-r border-gray-200">
+                <h2 class="text-3xl font-bold text-green-800">{{ service.name }}</h2>
+                <p class="mt-4 text-gray-600">{{ service.description }}</p>
+                <div class="mt-6 flex justify-between items-center text-lg">
+                    <span class="font-medium text-gray-700">Durée:</span>
+                    <span class="font-bold text-gray-900">{{ service.duration }}</span>
+                </div>
+                <div class="mt-4 flex justify-between items-center text-lg">
+                    <span class="font-medium text-gray-700">Prix:</span>
+                    <span class="font-bold text-green-700 text-2xl">{{ service.price }}</span>
+                </div>
+            </div>
+
+            <!-- Reservation Form -->
+            <div class="p-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Vos informations</h3>
+                <form method="post" class="space-y-6">
+                    {% csrf_token %}
+                    
+                    {% for field in form %}
+                        {% if field.is_hidden %}
+                            {{ field }}
+                        {% else %}
+                            <div>
+                                <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
+                                <div class="mt-1">
+                                    {{ field }}
+                                    {% if field.errors %}
+                                        <div class="text-red-500 text-sm mt-1">
+                                            {% for error in field.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    <div>
+                        <button type="submit" class="w-full inline-flex items-center justify-center px-6 py-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-300 transform hover:scale-105">
+                            Confirmer la réservation
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

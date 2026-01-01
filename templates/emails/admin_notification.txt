@@ -1,0 +1,14 @@
+Une nouvelle réservation a été effectuée sur le site.
+
+Détails de la réservation :
+- Soin : {{ reservation.service.name }}
+- Client : {{ reservation.name }}
+- Téléphone : {{ reservation.phone }}
+- Email : {{ reservation.email }}
+
+- Date : {{ reservation.date|date:"l d F Y" }}
+- Heure : {{ reservation.time|time:"H:i" }}
+
+- Adresse : {{ reservation.address }}, {{ reservation.city }}, {{ reservation.country }}
+
+Vous pouvez gérer cette réservation depuis l'interface d'administration.

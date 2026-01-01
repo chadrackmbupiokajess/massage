@@ -22,7 +22,6 @@
                 <div class="p-8 flex flex-col flex-grow">
                     <h2 class="text-2xl font-bold text-gray-800">{{ service.name }}</h2>
                     
-                    <!-- La classe `flex-grow` ici va pousser le contenu suivant vers le bas -->
                     <p class="mt-4 text-gray-600 flex-grow">{{ service.description|linebreaksbr }}</p>
                     
                     <div class="mt-6 flex justify-between items-center">
@@ -30,7 +29,7 @@
                         <span class="text-gray-500 font-medium">{{ service.duration }}</span>
                     </div>
                     <div class="mt-8">
-                        <a href="{% url 'contact' %}" class="block w-full text-center bg-green-700 text-white font-semibold py-3 px-6 rounded-lg hover:bg-green-800 transition-all duration-300 transform hover:scale-105">
+                        <a href="{% url 'reservation' service.id %}" class="block w-full text-center bg-green-700 text-white font-semibold py-3 px-6 rounded-lg hover:bg-green-800 transition-all duration-300 transform hover:scale-105">
                             Réserver ce soin
                         </a>
                     </div>

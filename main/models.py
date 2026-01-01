@@ -10,6 +10,28 @@ class Service(models.Model):
     def __str__(self):
         return self.name
 
+class Reservation(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'En attente'),
+        ('confirmed', 'Confirmé'),
+        ('cancelled', 'Annulé'),
+    ]
+
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, related_name='reservations')
+    date = models.DateField()
+    time = models.TimeField()
+    name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=20)
+    email = models.EmailField()
+    country = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    address = models.TextField()
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Réservation pour {self.name} - {self.service.name} le {self.date} à {self.time}"
+
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()

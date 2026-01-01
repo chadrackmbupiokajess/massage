@@ -152,6 +152,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # Pour la production
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Email settings for development (prints emails to console)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ADMIN_EMAIL = 'admin@example.com' # Remplacez par votre email
+DEFAULT_FROM_EMAIL = 'webmaster@example.com'
+
+
 # Create media directory if it doesn't exist (for development)
 if DEBUG:
     os.makedirs(MEDIA_ROOT, exist_ok=True)

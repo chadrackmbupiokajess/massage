@@ -1,10 +1,19 @@
 from django.contrib import admin
-from .models import Service, ContactMessage, CarouselSlide, HomePageContent, Testimonial, AboutPageContent, Commitment, ContactPageContent
+from .models import Service, Reservation, ContactMessage, CarouselSlide, HomePageContent, Testimonial, AboutPageContent, Commitment, ContactPageContent
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ('name', 'price', 'duration')
     search_fields = ('name', 'description')
+
+@admin.register(Reservation)
+class ReservationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'service', 'date', 'time', 'status')
+    list_filter = ('status', 'date', 'service')
+    search_fields = ('name', 'email', 'phone', 'service__name')
+    list_editable = ('status',)
+    date_hierarchy = 'date'
+    ordering = ('-date', '-time')
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
