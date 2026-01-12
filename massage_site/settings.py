@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECURITY WARNING: Do not commit this file with the secret key and password visible!
 SECRET_KEY = 'votre_cle_secrete_personnelle_ici'
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['relaxrestoremassage.pythonanywhere.com','127.0.0.1']
 
