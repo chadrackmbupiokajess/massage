@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from django.utils.translation import gettext_lazy as _
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,10 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!your-secret-key-here!'
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-!your-secret-key-here!')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['relaxrestoremassage.pythonanywhere.com','127.0.0.1']
 
@@ -108,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'fr'
+LANGUAGE_CODE = 'en'
 
 LANGUAGES = [
     ('fr', _('French')),
@@ -153,10 +154,19 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # Pour la production
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email settings for development (prints emails to console)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-ADMIN_EMAIL = 'admin@example.com' # Remplacez par votre email
-DEFAULT_FROM_EMAIL = 'webmaster@example.com'
+# Email settings
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
+    EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+    EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+    EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+ADMIN_EMAIL = config('ADMIN_EMAIL')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
 
 # Create media directory if it doesn't exist (for development)

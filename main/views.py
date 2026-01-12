@@ -35,7 +35,21 @@ def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()
+            contact_message = form.save()
+
+            # Send notification email to the admin
+            admin_subject = f"Nouveau message de {contact_message.name}"
+            admin_message = (
+                f"Vous avez reçu un nouveau message de la part de {contact_message.name} ({contact_message.email}).\n\n"
+                f"Message :\n{contact_message.message}"
+            )
+            send_mail(
+                admin_subject,
+                admin_message,
+                settings.DEFAULT_FROM_EMAIL,
+                [settings.ADMIN_EMAIL]
+            )
+
             return redirect('/contact?submitted=true')
     else:
         form = ContactForm()
@@ -62,7 +76,7 @@ def reservation_view(request, service_id):
             # Send notification email to the admin
             admin_subject = f"Nouvelle réservation de {reservation.name} pour {reservation.service.name}"
             admin_message = render_to_string('emails/admin_notification.txt', {'reservation': reservation})
-            send_mail(admin_subject, admin_message, settings.DEFAULT_FROM_EMAIL, [settings.ADMIN_EMAIL]) # Assurez-vous que ADMIN_EMAIL est défini dans vos settings
+            send_mail(admin_subject, admin_message, settings.DEFAULT_FROM_EMAIL, [settings.ADMIN_EMAIL])
 
             return redirect('reservation_confirmation', reservation_id=reservation.id)
     else:
